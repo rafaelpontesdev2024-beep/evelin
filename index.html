@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Uma pergunta para você ❤️</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, #4b164c 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, #35133f 0%, transparent 30%),
+        linear-gradient(135deg, #12051c, #240923, #100417);
+
+    color: white;
+}
+
+/* =========================
+   ESTRELAS
+========================= */
+
+.stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: .2;
+        transform: scale(.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+/* =========================
+   TELAS
+========================= */
+
+.screen {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
+    padding: 20px;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(.9);
+}
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope-container {
+    text-align: center;
+}
+
+.envelope-container h1 {
+    margin-bottom: 40px;
+    font-size: clamp(25px, 5vw, 42px);
+    font-weight: 300;
+}
+
+.envelope {
+    width: 280px;
+    height: 190px;
+
+    position: relative;
+    margin: auto;
+
+    cursor: pointer;
+
+    filter:
+        drop-shadow(0 20px 35px rgba(0,0,0,.5));
+
+    transition: transform .4s;
+}
+
+.envelope:hover {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.envelope-body {
+    position: absolute;
+    inset: 0;
+
+    background: #c9365d;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+.envelope-body::before,
+.envelope-body::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 0;
+    height: 0;
+
+    border-style: solid;
+}
+
+.envelope-body::before {
+    left: 0;
+
+    border-width: 0 140px 100px 0;
+    border-color: transparent #a92349 transparent transparent;
+}
+
+.envelope-body::after {
+    right: 0;
+
+    border-width: 100px 140px 0 0;
+    border-color: #b52c50 transparent transparent transparent;
+}
+
+.flap {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #e44b70;
+
+    transform-origin: top;
+
+    transition: transform 1s ease;
+
+    z-index: 5;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.heart-seal {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 50px;
+
+    z-index: 10;
+
+    animation: heartBeat 1.3s infinite;
+}
+
+@keyframes heartBeat {
+
+    0%,100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+.open-text {
+    margin-top: 30px;
+
+    color: #ffc5d5;
+
+    font-size: 18px;
+
+    animation: pulseText 1.5s infinite;
+}
+
+@keyframes pulseText {
+    50% {
+        opacity: .5;
+    }
+}
+
+/* =========================
+   CARTA
+========================= */
+
+.letter {
+    width: min(700px, 95vw);
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.97),
+            rgba(255,244,246,.97)
+        );
+
+    color: #542435;
+
+    padding: 45px;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5);
+
+    text-align: center;
+
+    transform: rotate(-1deg);
+
+    animation: letterAppear 1.2s ease;
+}
+
+@keyframes letterAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(80px)
+            rotate(-8deg)
+            scale(.8);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            rotate(-1deg)
+            scale(1);
+    }
+}
+
+.letter h2 {
+    color: #c42f59;
+
+    font-family: Georgia, serif;
+
+    font-size: 36px;
+
+    margin-bottom: 25px;
+}
+
+.letter p {
+    font-family: Georgia, serif;
+
+    font-size: 20px;
+
+    line-height: 1.8;
+
+    margin-bottom: 20px;
+}
+
+.signature {
+    margin-top: 30px;
+
+    font-family: cursive;
+
+    font-size: 27px;
+
+    color: #c42f59;
+}
+
+.continue {
+    margin-top: 25px;
+
+    padding: 14px 30px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background: #c42f59;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.continue:hover {
+    transform: scale(1.08);
+
+    background: #a92349;
+}
+
+/* =========================
+   PEDIDO
+========================= */
+
+.question {
+    text-align: center;
+
+    width: min(750px, 95vw);
+
+    position: relative;
+}
+
+.big-heart {
+    font-size: clamp(80px, 15vw, 150px);
+
+    animation: heartBeat 1.2s infinite;
+
+    filter:
+        drop-shadow(0 0 30px #ff3d70);
+}
+
+.question h1 {
+    margin-top: 20px;
+
+    font-size: clamp(30px, 6vw, 55px);
+
+    color: #fff;
+
+    text-shadow:
+        0 0 20px rgba(255,80,120,.7);
+}
+
+.question p {
+    margin-top: 20px;
+
+    font-size: 21px;
+
+    color: #ffdce5;
+
+    line-height: 1.7;
+}
+
+.buttons {
+    margin-top: 45px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+}
+
+button.answer {
+    padding: 17px 35px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: transform .25s;
+}
+
+#yes {
+    background: linear-gradient(135deg, #ff3b70, #ff174f);
+
+    color: white;
+
+    box-shadow:
+        0 10px 30px rgba(255,30,80,.4);
+}
+
+#yes:hover {
+    transform: scale(1.1);
+}
+
+#no {
+    background: white;
+
+    color: #555;
+
+    position: relative;
+
+    z-index: 50;
+}
+
+/* =========================
+   TELA FINAL
+========================= */
+
+.final {
+    text-align: center;
+
+    animation: finalAppear 1.5s ease;
+}
+
+@keyframes finalAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.final-heart {
+    font-size: 130px;
+
+    animation: heartBeat .8s infinite;
+
+    filter:
+        drop-shadow(0 0 40px #ff2e68);
+}
+
+.final h1 {
+    font-size: clamp(40px, 8vw, 75px);
+
+    margin: 20px 0;
+
+    color: #ffb3c6;
+}
+
+.final p {
+    font-size: 22px;
+
+    line-height: 1.8;
+
+    color: #ffe5ec;
+}
+
+.final .love {
+    margin-top: 30px;
+
+    font-family: cursive;
+
+    font-size: 35px;
+
+    color: white;
+}
+
+/* =========================
+   CORAÇÕES
+========================= */
+
+.floating-heart {
+    position: fixed;
+
+    bottom: -50px;
+
+    pointer-events: none;
+
+    animation:
+        floatUp linear forwards;
+
+    z-index: 1;
+}
+
+@keyframes floatUp {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+/* =========================
+   CONFETES
+========================= */
+
+.confetti {
+    position: fixed;
+
+    width: 10px;
+    height: 15px;
+
+    top: -20px;
+
+    z-index: 100;
+
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+
+        opacity: 0;
+    }
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:600px) {
+
+    .letter {
+        padding: 30px 20px;
+    }
+
+    .letter h2 {
+        font-size: 29px;
+    }
+
+    .letter p {
+        font-size: 18px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button.answer {
+        width: 220px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ESTRELAS -->
+<div class="stars" id="stars"></div>
+
+
+<!-- =========================
+     TELA 1
+========================= -->
+
+<section class="screen" id="screenEnvelope">
+
+    <div class="envelope-container">
+
+        <h1>
+            💌 Você recebeu uma mensagem especial...
+        </h1>
+
+        <div
+            class="envelope"
+            id="envelope"
+        >
+
+            <div class="envelope-body"></div>
+
+            <div class="flap"></div>
+
+            <div class="heart-seal">
+                ❤️
+            </div>
+
+        </div>
+
+        <div class="open-text">
+            Clique no envelope para abrir 💕
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TELA 2 - CARTA
+========================= -->
+
+<section
+    class="screen hidden"
+    id="screenLetter"
+>
+
+    <div class="letter">
+
+        <h2>
+            Para uma pessoa muito especial... ❤️
+        </h2>
+
+        <p>
+            Oi, meu amor...
+        </p>
+
+        <p>
+            Eu poderia escrever milhares de palavras
+            tentando explicar o quanto você é especial
+            para mim.
+        </p>
+
+        <p>
+            Desde que você apareceu na minha vida,
+            algumas coisas ficaram mais bonitas,
+            os momentos ficaram mais especiais
+            e os meus sorrisos ficaram mais fáceis.
+        </p>
+
+        <p>
+            E hoje eu queria fazer uma coisa diferente.
+        </p>
+
+        <p>
+            Eu preparei essa pequena surpresa
+            porque existe uma pergunta que eu quero
+            muito fazer para você...
+        </p>
+
+        <div class="signature">
+            Com todo meu carinho ❤️
+        </div>
+
+        <button
+            class="continue"
+            id="continueButton"
+        >
+            Descobrir a pergunta 💕
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TELA 3 - PEDIDO
+========================= -->
+
+<section
+    class="screen hidden"
+    id="screenQuestion"
+>
+
+    <div class="question">
+
+        <div class="big-heart">
+            ❤️
+        </div>
+
+        <h1>
+            Eu quero você comigo.
+        </h1>
+
+        <p>
+            Quero viver momentos incríveis ao seu lado,
+            rir com você, cuidar de você,
+            compartilhar meus dias e construir
+            muitas histórias juntos.
+        </p>
+
+        <p>
+            Então, depois de pensar muito
+            em como fazer essa pergunta...
+        </p>
+
+        <p>
+            <strong>
+                Você aceita namorar comigo? 🥹❤️
+            </strong>
+        </p>
+
+        <div class="buttons">
+
+            <button
+                class="answer"
+                id="yes"
+            >
+                SIM! ❤️
+            </button>
+
+            <button
+                class="answer"
+                id="no"
+            >
+                Não 😢
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TELA 4 - FINAL
+========================= -->
+
+<section
+    class="screen hidden"
+    id="screenFinal"
+>
+
+    <div class="final">
+
+        <div class="final-heart">
+            💖
+        </div>
+
+        <h1>
+            ELA DISSE SIM! 😭❤️
+        </h1>
+
+        <p>
+            Agora é oficial!
+            <br>
+            Somos nós dois. 🥰
+        </p>
+
+        <p>
+            Que esse seja apenas o começo
+            de uma história linda.
+        </p>
+
+        <div class="love">
+            Eu te amo! ❤️
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================
+   CONFIGURAÇÕES
+===================================== */
+
+const nomeDela = "MEU AMOR";
+const seuNome = "SEU NOME";
+
+
+/* =====================================
+   ESTRELAS
+===================================== */
+
+const stars = document.getElementById("stars");
+
+for(let i = 0; i < 150; i++){
+
+    const star = document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 100 + "%";
+
+    star.style.animationDelay =
+        Math.random() * 3 + "s";
+
+    star.style.opacity =
+        Math.random();
+
+    stars.appendChild(star);
+}
+
+
+/* =====================================
+   TROCAR TELAS
+===================================== */
+
+function showScreen(screen){
+
+    document.querySelectorAll(".screen")
+        .forEach(s => {
+
+            s.classList.add("hidden");
+
+        });
+
+    setTimeout(() => {
+
+        screen.classList.remove("hidden");
+
+    }, 300);
+}
+
+
+/* =====================================
+   ENVELOPE
+===================================== */
+
+const envelope =
+    document.getElementById("envelope");
+
+const screenEnvelope =
+    document.getElementById("screenEnvelope");
+
+const screenLetter =
+    document.getElementById("screenLetter");
+
+envelope.addEventListener("click", () => {
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        showScreen(screenLetter);
+
+    }, 1000);
+
+});
+
+
+/* =====================================
+   CARTA
+===================================== */
+
+const continueButton =
+    document.getElementById("continueButton");
+
+const screenQuestion =
+    document.getElementById("screenQuestion");
+
+continueButton.addEventListener("click", () => {
+
+    showScreen(screenQuestion);
+
+});
+
+
+/* =====================================
+   BOTÃO NÃO
+===================================== */
+
+const noButton =
+    document.getElementById("no");
+
+
+function fugir(){
+
+    const padding = 20;
+
+    const maxX =
+        window.innerWidth -
+        noButton.offsetWidth -
+        padding;
+
+    const maxY =
+        window.innerHeight -
+        noButton.offsetHeight -
+        padding;
+
+    const x =
+        Math.max(
+            padding,
+            Math.random() * maxX
+        );
+
+    const y =
+        Math.max(
+            padding,
+            Math.random() * maxY
+        );
+
+    noButton.style.position = "fixed";
+
+    noButton.style.left = x + "px";
+
+    noButton.style.top = y + "px";
+
+    noButton.style.transform =
+        `rotate(${Math.random() * 30 - 15}deg)`;
+
+}
+
+
+/* Mouse */
+
+noButton.addEventListener(
+    "mouseenter",
+    fugir
+);
+
+
+/* Celular */
+
+noButton.addEventListener(
+    "touchstart",
+    function(event){
+
+        event.preventDefault();
+
+        fugir();
+
+    }
+);
+
+
+/* Caso tente clicar */
+
+noButton.addEventListener(
+    "click",
+    fugir
+);
+
+
+/* =====================================
+   BOTÃO SIM
+===================================== */
+
+const yesButton =
+    document.getElementById("yes");
+
+const screenFinal =
+    document.getElementById("screenFinal");
+
+yesButton.addEventListener("click", () => {
+
+    showScreen(screenFinal);
+
+    criarCoracoes();
+
+    criarConfetes();
+
+});
+
+
+/* =====================================
+   CORAÇÕES
+===================================== */
+
+function criarCoracoes(){
+
+    for(let i = 0; i < 70; i++){
+
+        setTimeout(() => {
+
+            const heart =
+                document.createElement("div");
+
+            heart.className =
+                "floating-heart";
+
+            heart.innerHTML =
+                ["❤️","💖","💕","💗","💓","💘"]
+                [Math.floor(Math.random() * 6)];
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            heart.style.fontSize =
+                (15 + Math.random() * 35) + "px";
+
+            heart.style.animationDuration =
+                (4 + Math.random() * 5) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+
+                heart.remove();
+
+            }, 10000);
+
+        }, i * 80);
+
+    }
+
+}
+
+
+/* =====================================
+   CONFETES
+===================================== */
+
+function criarConfetes(){
+
+    const colors = [
+        "#ff2e63",
+        "#ffbe0b",
+        "#fb5607",
+        "#8338ec",
+        "#3a86ff",
+        "#ffffff",
+        "#ff8fab"
+    ];
+
+    for(let i = 0; i < 180; i++){
+
+        const confetti =
+            document.createElement("div");
+
+        confetti.className =
+            "confetti";
+
+        confetti.style.left =
+            Math.random() * 100 + "vw";
+
+        confetti.style.background =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        confetti.style.animationDuration =
+            (2 + Math.random() * 4) + "s";
+
+        confetti.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        confetti.style.transform =
+            `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+
+            confetti.remove();
+
+        }, 7000);
+
+    }
+
+}
+
+
+/* =====================================
+   CORAÇÕES AUTOMÁTICOS
+===================================== */
+
+setInterval(() => {
+
+    const heart =
+        document.createElement("div");
+
+    heart.className =
+        "floating-heart";
+
+    heart.innerHTML = "💕";
+
+    heart.style.left =
+        Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        (15 + Math.random() * 20) + "px";
+
+    heart.style.animationDuration =
+        (6 + Math.random() * 5) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 12000);
+
+}, 1200);
+
+</script>
+
+</body>
+</html>
